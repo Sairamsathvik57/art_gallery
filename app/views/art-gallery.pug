@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  h1 Art Gallery
+
+  form(action="/gallery", method="GET")
+    label(for="category") Filter by category:
+    select(name="category")
+      option(value="") All
+      each cat in categories
+        option(value=cat selected=(selectedCategory == cat)) #{cat}
+    button(type="submit") Filter
+
+  .gallery
+    if artworks.length
+      each art in artworks
+        .artwork
+          img(src=art.image alt=art.title)
+          h2= art.title
+          p= art.description
+          p Category: #{art.category}
+    else
+      p No artworks available.

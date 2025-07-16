@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1 Welcome to the Art Gallery
+
+  p Discover, admire, and support original artwork from independent artists.
+
+  if session && session.loggedIn
+    p Hello! You are logged in.
+    a(href='/gallery') View Art Gallery
+    br
+    a(href='/logout') Logout
+  else
+    a(href='/login') Login to explore artworks
+    br
+    a(href='/register') Register as an Artist
