@@ -1,0 +1,22 @@
+doctype html
+html
+  head
+    title Art Gallery
+    link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css")
+    link(rel='stylesheet', href='../style.css')
+    
+
+  body
+    header
+      h1 Art Gallery
+      nav
+        a(href='/gallery') Gallery |
+        a(href='/artworks/new') Upload Art |
+        a(href='/my-gallery') My Gallery |
+        a(href='/favourites') Favourites |
+        a(href='/profile') Profile |
+        a(href='/logout') Logout
+    main
+      block content
+    footer
+      p © 2025 Art Gallery Website

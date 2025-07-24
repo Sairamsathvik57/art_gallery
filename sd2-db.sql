@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Jul 16, 2025 at 02:10 AM
+-- Generation Time: Jul 24, 2025 at 02:33 AM
 -- Server version: 8.2.0
 -- PHP Version: 8.2.8
 
@@ -50,6 +50,25 @@ INSERT INTO `Artworks` (`id`, `title`, `description`, `image`, `category`, `user
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `Favorites`
+--
+
+CREATE TABLE `Favorites` (
+  `id` int NOT NULL,
+  `user_id` int DEFAULT NULL,
+  `artwork_id` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `Favorites`
+--
+
+INSERT INTO `Favorites` (`id`, `user_id`, `artwork_id`) VALUES
+(2, 1, 2);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `Users`
 --
 
@@ -80,6 +99,14 @@ ALTER TABLE `Artworks`
   ADD KEY `user_id` (`user_id`);
 
 --
+-- Indexes for table `Favorites`
+--
+ALTER TABLE `Favorites`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `user_id` (`user_id`,`artwork_id`),
+  ADD KEY `artwork_id` (`artwork_id`);
+
+--
 -- Indexes for table `Users`
 --
 ALTER TABLE `Users`
@@ -94,7 +121,13 @@ ALTER TABLE `Users`
 -- AUTO_INCREMENT for table `Artworks`
 --
 ALTER TABLE `Artworks`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `Favorites`
+--
+ALTER TABLE `Favorites`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `Users`
@@ -111,6 +144,13 @@ ALTER TABLE `Users`
 --
 ALTER TABLE `Artworks`
   ADD CONSTRAINT `Artworks_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `Users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `Favorites`
+--
+ALTER TABLE `Favorites`
+  ADD CONSTRAINT `Favorites_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `Users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `Favorites_ibfk_2` FOREIGN KEY (`artwork_id`) REFERENCES `Artworks` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

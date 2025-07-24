@@ -1,0 +1,17 @@
+extends layout-auth
+
+block content
+  h1 My Uploaded Artworks
+
+  if artworks.length
+    .gallery
+      each art in artworks
+        .artwork
+          img(src=`/images/${art.image}`, alt=art.title)
+          h2= art.title
+          p= art.description
+          p Category: #{art.category}
+          form(action=`/artworks/delete/${art.id}`, method="POST")
+            button(type="submit") Delete
+  else
+    p You have not uploaded any artworks yet.

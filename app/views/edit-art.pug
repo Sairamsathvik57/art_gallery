@@ -1,0 +1,14 @@
+extends layout-auth
+
+block content
+  h1 Edit Artwork
+  form(action=`/artworks/update/${artwork.id}`, method="POST")
+    label Title
+    input(type="text", name="title", value=artwork.title)
+    label Description
+    textarea(name="description")= artwork.description
+    label Image filename
+    input(type="text", name="image", value=artwork.image)
+    label Category
+    input(type="text", name="category", value=artwork.category)
+    button(type="submit") Update

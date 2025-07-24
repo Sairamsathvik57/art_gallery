@@ -84,6 +84,7 @@ form button:hover {
   padding: 1rem;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  height: 80%
 }
 
 .artwork img {
@@ -129,4 +130,21 @@ footer {
   object-fit: cover;    
   border-radius: 4px;
 }
+
+.fav-button {
+  /* padding: 8px 14px; */
+  font-size: 14px;
+  background-color: #aa4a4c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.fav-button:hover {
+  background-color: #e03c3f;
+}
+
 

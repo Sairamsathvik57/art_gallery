@@ -1,0 +1,16 @@
+extends layout-auth
+
+block content
+  h1 Your Profile
+
+  form(action="/profile/update", method="POST")
+    label Email
+    input(type="email", name="email", value=user.email readonly)
+
+    label Contact Number
+    input(type="text", name="contactNumber", value=user.contactNumber)
+
+    label Address
+    input(type="text", name="address", value=user.address)
+
+    button(type="submit") Save Changes

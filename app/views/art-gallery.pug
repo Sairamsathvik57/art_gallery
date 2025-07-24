@@ -1,4 +1,4 @@
-extends layout
+extends layout-auth
 
 block content
   h1 Art Gallery
@@ -15,9 +15,11 @@ block content
     if artworks.length
       each art in artworks
         .artwork
-          img(src=art.image alt=art.title)
+          img(src=src=`/images/${art.image}` alt=art.title)
           h2= art.title
           p= art.description
           p Category: #{art.category}
+          form(action=`/favourites/add/${art.id}`, method="POST")
+            button.fav-button(type="submit") ❤️ Add to Favourites
     else
       p No artworks available.
