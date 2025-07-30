@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Jul 24, 2025 at 02:33 AM
+-- Generation Time: Jul 30, 2025 at 05:20 PM
 -- Server version: 8.2.0
 -- PHP Version: 8.2.8
 
@@ -44,8 +44,7 @@ INSERT INTO `Artworks` (`id`, `title`, `description`, `image`, `category`, `user
 (1, 'Sunset Harmony', 'A vivid sunset over a calm lake.', 'sunset.jpg', 'Landscape', 1),
 (2, 'Modern Mind', 'An abstract representation of complex thoughts.', 'abstract1.jpg', 'Abstract', 1),
 (3, 'City Pulse', 'Urban life captured in motion.', 'city.jpg', 'Modern', 1),
-(4, 'Forest Dreams', 'Lush green forest scene.', 'forest.jpg', 'Nature', 1),
-(5, 'Ocean Depths', 'The mysterious life below the surface.', 'ocean.jpg', 'Nature', 1);
+(4, 'Forest Dreams', 'Lush green forest scene.', 'forest.jpg', 'Nature', 1);
 
 -- --------------------------------------------------------
 
@@ -77,15 +76,17 @@ CREATE TABLE `Users` (
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
   `contactNumber` varchar(20) DEFAULT NULL,
-  `address` varchar(255) DEFAULT NULL
+  `address` varchar(255) DEFAULT NULL,
+  `isAdmin` tinyint(1) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `Users`
 --
 
-INSERT INTO `Users` (`id`, `email`, `password`, `contactNumber`, `address`) VALUES
-(1, 'sairam@gmail.com', '$2a$10$n9vYus51pN149rw.2I6t/eYKr9hM2AaJlhXn0BT53t/Poi4IaSni.', '12345678', 'london');
+INSERT INTO `Users` (`id`, `email`, `password`, `contactNumber`, `address`, `isAdmin`) VALUES
+(1, 'sairam@gmail.com', '$2a$10$n9vYus51pN149rw.2I6t/eYKr9hM2AaJlhXn0BT53t/Poi4IaSni.', '12345678', 'london', 1),
+(2, '123@gmail.com', '$2a$10$I3.GBOgvwRRubUBpm6wHJOHV0n4JfzjDOracujILSAJbbUvea/Ode', '1234567890', 'london', 0);
 
 --
 -- Indexes for dumped tables
@@ -133,7 +134,7 @@ ALTER TABLE `Favorites`
 -- AUTO_INCREMENT for table `Users`
 --
 ALTER TABLE `Users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables

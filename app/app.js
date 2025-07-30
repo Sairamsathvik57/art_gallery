@@ -45,10 +45,43 @@ const upload = multer({ storage });
 // Routes
 app.get("/", (req, res) => res.render("home"));
 
+function requireAdmin(req, res, next) {
+  if (!req.session.uid) return res.redirect('/login');
+  db.query("SELECT isAdmin FROM Users WHERE id = ?", [req.session.uid])
+    .then(result => {
+      if (result[0]?.isAdmin) next();
+      else res.status(403).send("Access denied");
+    })
+    .catch(err => {
+      console.error("Admin auth error:", err.message);
+      res.status(500).send("Server Error");
+    });
+}
+
+app.get('/admin', requireAdmin, async (req, res) => {
+  const users = await db.query("SELECT * FROM Users");
+  const artworks = await db.query("SELECT * FROM Artworks");
+  res.render("admin-dashboard", { users, artworks });
+});
+
+app.post('/admin/artworks/delete/:id', requireAdmin, async (req, res) => {
+  await db.query("DELETE FROM Artworks WHERE id = ?", [req.params.id]);
+  res.redirect('/admin');
+});
+
+app.post('/admin/users/delete/:id', requireAdmin, async (req, res) => {
+  await db.query("DELETE FROM Users WHERE id = ?", [req.params.id]);
+  res.redirect('/admin');
+});
+
 app.get("/login", (req, res) => {
-  if (req.session.uid) return res.redirect("/gallery");
+  if (req.session.uid) {
+    if (req.session.isAdmin) return res.redirect("/admin");
+    return res.redirect("/gallery");
+  }
   res.render("login");
 });
+
 
 app.get("/register", (req, res) => res.render("register"));
 
@@ -69,13 +102,22 @@ app.post("/set-password", async (req, res) => {
 app.post("/authenticate", async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) return res.status(400).send("Email and password are required.");
+
   const user = new User(email);
   const uId = await user.getIdFromEmail();
   if (!uId || !(await user.authenticate(password))) return res.status(401).send("Invalid credentials");
+
+  const result = await db.query("SELECT isAdmin FROM Users WHERE id = ?", [uId]);
+  const isAdmin = result[0]?.isAdmin;
+
   req.session.uid = uId;
   req.session.loggedIn = true;
+  req.session.isAdmin = isAdmin;
+
+  if (isAdmin) return res.redirect("/admin");
   res.redirect("/gallery");
 });
+
 
 app.get("/logout", (req, res) => {
   req.session.destroy(() => res.redirect("/login"));

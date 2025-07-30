@@ -1,0 +1,43 @@
+extends admin_navbar
+
+block content
+  h1 Admin Panel
+
+  h2 All Users
+  table.table
+    thead
+      tr
+        th ID
+        th Email
+        th Contact
+        th isAdmin
+        th Action
+    tbody
+      each user in users
+        tr
+          td= user.id
+          td= user.email
+          td= user.contactNumber
+          td= user.isAdmin ? 'Yes' : 'No'
+          td
+            if !user.isAdmin
+              form(action=`/admin/users/delete/${user.id}`, method="POST")
+                button.btn.btn-danger.btn-sm(type="submit") Delete
+
+  h2 All Artworks
+  table.table
+    thead
+      tr
+        th Title
+        th Image
+        th User
+        th Action
+    tbody
+      each art in artworks
+        tr
+          td= art.title
+          td: img(src=`/images/${art.image}`, width="60")
+          td= art.user_id
+          td
+            form(action=`/admin/artworks/delete/${art.id}`, method="POST")
+              button.btn.btn-warning.btn-sm(type="submit") Delete
